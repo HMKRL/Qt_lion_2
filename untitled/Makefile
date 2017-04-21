@@ -50,11 +50,13 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../main.cpp \
 		../mainwindow.cpp \
-		../bullet.cpp moc_mainwindow.cpp \
+		../bullet.cpp qrc_res.cpp \
+		moc_mainwindow.cpp \
 		moc_bullet.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		bullet.o \
+		qrc_res.o \
 		moc_mainwindow.o \
 		moc_bullet.o
 DIST          = ../../../Qt5.6.0/5.6/gcc_64/mkspecs/features/spec_pre.prf \
@@ -341,6 +343,7 @@ Makefile: ../untitled.pro ../../Qt5.6.0/5.6/gcc_64/mkspecs/features/spec_pre.prf
 		../../Qt5.6.0/5.6/gcc_64/mkspecs/features/yacc.prf \
 		../../Qt5.6.0/5.6/gcc_64/mkspecs/features/lex.prf \
 		../untitled.pro \
+		../res.qrc \
 		../../Qt5.6.0/5.6/gcc_64/lib/libQt5Widgets.prl \
 		../../Qt5.6.0/5.6/gcc_64/lib/libQt5Gui.prl \
 		../../Qt5.6.0/5.6/gcc_64/lib/libQt5Core.prl
@@ -480,6 +483,7 @@ Makefile: ../untitled.pro ../../Qt5.6.0/5.6/gcc_64/mkspecs/features/spec_pre.prf
 ../../Qt5.6.0/5.6/gcc_64/mkspecs/features/yacc.prf:
 ../../Qt5.6.0/5.6/gcc_64/mkspecs/features/lex.prf:
 ../untitled.pro:
+../res.qrc:
 ../../Qt5.6.0/5.6/gcc_64/lib/libQt5Widgets.prl:
 ../../Qt5.6.0/5.6/gcc_64/lib/libQt5Gui.prl:
 ../../Qt5.6.0/5.6/gcc_64/lib/libQt5Core.prl:
@@ -497,6 +501,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
+	$(COPY_FILE) --parents ../res.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../mainwindow.h ../bullet.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../main.cpp ../mainwindow.cpp ../bullet.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../mainwindow.ui $(DISTDIR)/
@@ -520,8 +525,15 @@ mocables: compiler_moc_header_make_all compiler_moc_source_make_all
 
 check: first
 
-compiler_rcc_make_all:
+compiler_rcc_make_all: qrc_res.cpp
 compiler_rcc_clean:
+	-$(DEL_FILE) qrc_res.cpp
+qrc_res.cpp: ../res.qrc \
+		../res/black_bullet.png \
+		../res/red_bullet.png \
+		../res/reimu.jpg
+	/home/hmkrl/Qt5.6.0/5.6/gcc_64/bin/rcc -name res ../res.qrc -o qrc_res.cpp
+
 compiler_moc_header_make_all: moc_mainwindow.cpp moc_bullet.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp moc_bullet.cpp
@@ -753,7 +765,7 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_header_clean compiler_uic_clean 
+compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
 
@@ -1143,6 +1155,9 @@ bullet.o: ../bullet.cpp ../bullet.h \
 		../../Qt5.6.0/5.6/gcc_64/include/QtGui/qpixelformat.h \
 		../../Qt5.6.0/5.6/gcc_64/include/QtGui/qtransform.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o bullet.o ../bullet.cpp
+
+qrc_res.o: qrc_res.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_res.o qrc_res.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

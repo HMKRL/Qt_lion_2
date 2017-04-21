@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->graphicsView->setScene(scene);
-    item = new QGraphicsPixmapItem(QPixmap("/home/hmkrl/Pictures/reimu.jpg"));
+    item = new QGraphicsPixmapItem(QPixmap(":/res/reimu.jpg"));
     scene->addItem(item);
     item->setPos(200, 200);
     timer->start(10);
@@ -49,15 +49,14 @@ void MainWindow::mousePressEvent(QMouseEvent *e)
     bullet *b = new bullet;
 
     if(qrand() % 2 == 0) {
-        b->setPixmap(QPixmap("/home/hmkrl/Pictures/black_bullet.png").scaled(50, 50));
+        b->setPixmap(QPixmap(":/res/black_bullet.png").scaled(50, 50));
     }
     else {
-        b->setPixmap(QPixmap("/home/hmkrl/Pictures/red_bullet.png").scaled(50, 50));
+        b->setPixmap(QPixmap(":/res/red_bullet.png").scaled(50, 50));
     }
     b->setPos(item->x() + item->pixmap().width() / 2 - b->pixmap().width() / 2, item->y() - b->pixmap().height());
     b->connect(timer, SIGNAL(timeout()), b, SLOT(fly()));
     scene->addItem(static_cast<QGraphicsPixmapItem*>(b));
-    scene->item
 }
 
 
