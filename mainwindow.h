@@ -29,7 +29,7 @@ public slots:
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
-    QGraphicsPixmapItem *item;
+    QGraphicsPixmapItem *player;
     QTimer *timer;
 };
 

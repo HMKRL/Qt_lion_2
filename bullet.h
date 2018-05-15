@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QGraphicsPixmapItem>
+#include <QGraphicsScene>
 
 class bullet : public QObject, public QGraphicsPixmapItem
 {

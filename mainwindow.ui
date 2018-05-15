@@ -23,7 +23,7 @@
       <x>0</x>
       <y>0</y>
       <width>1201</width>
-      <height>871</height>
+      <height>851</height>
      </rect>
     </property>
     <property name="focusPolicy">
@@ -37,7 +37,7 @@
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>22</height>
+     <height>27</height>
     </rect>
    </property>
   </widget>
